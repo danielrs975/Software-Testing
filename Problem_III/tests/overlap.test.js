@@ -2,7 +2,7 @@ const overlap = require('../overlap');
 
 const errorMsgOne = 'Error! The function must receives two intervals';
 const errorMsgTwo = 'Error! The intervals objects must contain only integers';
-const errorMsgThree = 'Error! The intervals must be well defined'
+const errorMsgThree = 'Error! The intervals must be well defined';
 
 test('should overlap function must exists', () => {
 	expect(overlap).not.toBeUndefined();
@@ -10,17 +10,17 @@ test('should overlap function must exists', () => {
 
 test('should throw an error if receives only one interval', () => {
 	const A = undefined;
-	const B = { b1: 1, b2: 3 }
+	const B = { b1: 1, b2: 3 };
 	expect(() => overlap(A, B)).toThrowError(errorMsgOne);
 	expect(() => overlap(A)).toThrowError(errorMsgOne);
 	expect(() => overlap()).toThrowError(errorMsgOne);
-})
+});
 
 test('should throw error if one interval is not defined with integers', () => {
 	const A = { a1: 'Hola', a2: 2 };
 	const B = { b1: 2, b2: 3 };
 	expect(() => overlap(A, B)).toThrowError(errorMsgTwo);
-})
+});
 
 /**
  * An interval is bad define when for A=(a1, a2) a1 > a2;
@@ -29,7 +29,7 @@ test('should throw error if an interval is bad defined (See definition up)', () 
 	const A = { a1: 10, a2: 9 };
 	const B = { b1: 1, b2: 2 };
 	expect(() => overlap(A, B)).toThrowError(errorMsgThree);
-})
+});
 
 /**
  * First case: is the following
@@ -50,10 +50,10 @@ test('should throw error if an interval is bad defined (See definition up)', () 
  * Expect value for the test: (2, 4)
  */
 test('should return (b1, a2) when A overlap only a part of B', () => {
-	const A = {a1: 1, a2: 4};
-	const B = {b1: 2, b2: 6};
+	const A = { a1: 1, a2: 4 };
+	const B = { b1: 2, b2: 6 };
 	const result = overlap(A, B);
-	expect(result).toEqual({r1: B.b1, r2: A.a2});
+	expect(result).toEqual({ r1: B.b1, r2: A.a2 });
 });
 
 /**
@@ -72,13 +72,12 @@ test('should return (b1, a2) when A overlap only a part of B', () => {
  * 		- (b1, b2) = (4, 5)
  * Expected result: (4, 4)
  */
-test("should return (b1, b1) when A=(a1, a2) overlap B=(b1, b2) in one point", () => {
+test('should return (b1, b1) when A=(a1, a2) overlap B=(b1, b2) in one point', () => {
 	const A = { a1: 1, a2: 4 };
 	const B = { b1: 4, b2: 5 };
 	const result = overlap(A, B);
 	expect(result).toEqual({ r1: B.b1, r2: B.b1 });
-})
-
+});
 
 /**
  * Second case: is the following
@@ -158,7 +157,7 @@ test('should return (a1, b2) when B=(b1, b2) overlap a piece of A=(a1, a2)', () 
 	const A = { a1: 2, a2: 6 };
 	const B = { b1: 1, b2: 4 };
 	const result = overlap(A, B);
-	expect(result).toEqual({ r1: A.a1, r2: B.b2 } );
+	expect(result).toEqual({ r1: A.a1, r2: B.b2 });
 });
 
 /**
@@ -182,7 +181,7 @@ test('should return (b2, a1) when B=(b1, b2) overlap one point of A=(a1, a2)', (
 	const A = { a1: 4, a2: 5 };
 	const result = overlap(A, B);
 	expect(result).toEqual({ r1: A.a1, r2: B.b2 });
-})
+});
 
 /**
  * Fifth case: is the following
@@ -204,7 +203,7 @@ test('should return either A or B when A = B', () => {
 	const B = { b1: 1, b2: 3 };
 	const result = overlap(A, B);
 	expect(result).toEqual({ r1: A.a1, r2: A.a2 });
-})
+});
 
 /**
  * Sixth case: is the following
@@ -227,4 +226,4 @@ test('should return (null, null) because A does not overlap B', () => {
 	const B = { b1: 5, b2: 8 };
 	const result = overlap(A, B);
 	expect(result).toEqual({ r1: null, r2: null });
-})
+});
