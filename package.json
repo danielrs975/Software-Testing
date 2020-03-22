@@ -6,11 +6,13 @@
 	"scripts": {
 		"test:problem_one": "jest ./Problem_I/tests",
 		"test:problem_two": "jest ./Problem_II/tests",
-		"test:problem_three": "jest ./Problem_III/tests"
+		"test:problem_three": "jest ./Problem_III/tests",
+		"test:problem_four": "jest ./Problem_IV/tests"
 	},
 	"author": "Daniel Rodriguez",
 	"license": "ISC",
 	"dependencies": {
+		"@types/jest": "^25.1.4",
 		"jest": "^25.1.0"
 	}
 }
