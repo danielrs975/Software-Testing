@@ -1,0 +1,16 @@
+{
+	"name": "testing",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test:problem_one": "jest ./Problem_I/tests",
+		"test:problem_two": "jest ./Problem_II/tests",
+		"test:problem_three": "jest ./Problem_III/tests"
+	},
+	"author": "Daniel Rodriguez",
+	"license": "ISC",
+	"dependencies": {
+		"jest": "^25.1.0"
+	}
+}
