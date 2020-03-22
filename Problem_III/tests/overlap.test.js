@@ -2,6 +2,7 @@ const overlap = require('../overlap');
 
 const errorMsgOne = 'Error! The function must receives two intervals';
 const errorMsgTwo = 'Error! The intervals objects must contain only integers';
+const errorMsgThree = 'Error! The intervals must be well defined'
 
 test('should overlap function must exists', () => {
 	expect(overlap).not.toBeUndefined();
@@ -19,6 +20,15 @@ test('should throw error if one interval is not defined with integers', () => {
 	const A = { a1: 'Hola', a2: 2 };
 	const B = { b1: 2, b2: 3 };
 	expect(() => overlap(A, B)).toThrowError(errorMsgTwo);
+})
+
+/**
+ * An interval is bad define when for A=(a1, a2) a1 > a2;
+ */
+test('should throw error if an interval is bad defined (See definition up)', () => {
+	const A = { a1: 10, a2: 9 };
+	const B = { b1: 1, b2: 2 };
+	expect(() => overlap(A, B)).toThrowError(errorMsgThree);
 })
 
 /**
@@ -86,13 +96,19 @@ test("should return (b1, b1) when A=(a1, a2) overlap B=(b1, b2) in one point", (
  * 		- (a1, a2) = (4, 6)
  * 		- (b1, b2) = (2, 8)
  * Expected result: (4, 6)
+ * Alternative case one point inside A touch one point in the frontier of B
+ * 		a1			A		   a2
+ * 		|----------------------|
+ * 	|--------------------------|
+ * 	b1			 B			   b2
+ * Instead of (a1, a2) = (4, 6) we test with (4, 8);
  */
 test('should return A when A is inside B', () => {
 	const A = { a1: 4, a2: 6 };
 	const B = { b1: 2, b2: 8 };
 	const result = overlap(A, B);
 	expect(result).toEqual({ r1: A.a1, r2: A.a2 });
-	const AlternativeA = { a1: 4, a2: 4 };
+	const AlternativeA = { a1: 4, a2: 8 };
 	const alternativeResult = overlap(AlternativeA, B);
 	expect(alternativeResult).toEqual({ r1: AlternativeA.a1, r2: AlternativeA.a2 });
 });
@@ -144,6 +160,29 @@ test('should return (a1, b2) when B=(b1, b2) overlap a piece of A=(a1, a2)', () 
 	const result = overlap(A, B);
 	expect(result).toEqual({ r1: A.a1, r2: B.b2 } );
 });
+
+/**
+ * Alternative First Case: is the following
+ * 			B
+ * 	|----------------|
+ * 	b1				 b2
+ * 					 |-------------------|
+ * 					 a1		   A         a2
+ * A overlap B in one point. The expected value is (b2, a1) = (b2, b2) = (a1, a1)
+ * With:
+ * 		- a1 < a2 and b1 < b2
+ * 		- b2 == a1
+ * Values for the test:
+ * 		- (a1, a2) = (1, 4)
+ * 		- (b1, b2) = (4, 5)
+ * Expected result: (4, 4)
+ */
+test('should return (b2, a1) when B=(b1, b2) overlap one point of A=(a1, a2)', () => {
+	const B = { b1: 1, b2: 4 };
+	const A = { a1: 4, a2: 5 };
+	const result = overlap(A, B);
+	expect(result).toEqual({ r1: A.a1, r2: B.b2 });
+})
 
 /**
  * Fifth case: is the following
