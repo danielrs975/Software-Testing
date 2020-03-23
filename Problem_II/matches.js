@@ -8,6 +8,7 @@ const bestMoveIsThree = [ 4, 8, 12, 16, 20, 24, 28 ]; // These are the numbers w
 const player = (nbMatches) => {
 	if (nbMatches <= 0) throw new Error('Error! The number of matches left must be positive');
 	if (nbMatches > 30) throw new Error('Error! The number of matches must be less or equal than 30');
+	// We check if the nbMatches enter a specific group and return the best move
 	if (bestMoveIsOne.indexOf(nbMatches) != -1) {
 		return 1;
 	} else if (bestMoveIsTwo.indexOf(nbMatches) != -1) {
@@ -15,6 +16,8 @@ const player = (nbMatches) => {
 	} else if (bestMoveIsThree.indexOf(nbMatches) != -1) {
 		return 3;
 	} else {
+		// In here we can return either 1, 2 or 3, it does not matter
+		// because there is no move to win the game
 		return 1;
 	}
 };
